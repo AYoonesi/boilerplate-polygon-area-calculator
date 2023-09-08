@@ -1,10 +1,30 @@
 class Rectangle:
     def __init__(self, width, height):
-        self.width = width
-        self.height = height
+        self._width = width
+        self._height = height
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        if value < 0:
+            raise ValueError("Width cannot be negative")
+        self._width = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        if value < 0:
+            raise ValueError("Height cannot be negative")
+        self._height = value
 
     def __str__(self):
-        return f"Rectangle(width={self.width}, height={self.height})"
+        return f"Rectangle(width={self._width}, height={self._height})"
 
     def set_width(self, width):
         self.width = width
@@ -13,24 +33,22 @@ class Rectangle:
         self.height = height
 
     def get_area(self):
-        return self.width * self.height
+        return self._width * self._height
 
     def get_perimeter(self):
-        return 2 * (self.width + self.height)
+        return 2 * (self._width + self._height)
 
     def get_diagonal(self):
-        return (self.width ** 2 + self.height ** 2) ** 0.5
+        return (self._width ** 2 + self._height ** 2) ** 0.5
 
     def get_picture(self):
-        if self.width > 50 or self.height > 50:
+        if self._width > 50 or self._height > 50:
             return "Too big for picture."
-        else:
-            picture = '*' * self.width + '\n'
-            picture *= self.height
-            return picture
+        picture = ('*' * self._width + '\n') * self._height
+        return picture
 
     def get_amount_inside(self, shape):
-        return (self.width // shape.width) * (self.height // shape.height)
+        return (self._width // shape._width) * (self._height // shape._height)
 
 
 class Square(Rectangle):
@@ -38,7 +56,7 @@ class Square(Rectangle):
         super().__init__(side, side)
 
     def __str__(self):
-        return f"Square(side={self.width})"
+        return f"Square(side={self._width})"
 
     def set_side(self, side):
         self.width = side
